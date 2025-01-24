@@ -1,0 +1,4117 @@
+openapi: 3.0.0
+info:
+  title: Copper CRM API continued response
+  version: 1.0.0
+  description: API for interacting with Copper CRM, including managing leads, people, companies, opportunities, and more.
+servers:
+  - url: https://api.copper.com/v1
+    description: Copper API server
+paths:
+  /account-and-users/fetch-account-details:
+    get:
+      summary: Fetch account details
+      description: Retrieve details of the Copper account.
+      operationId: fetchAccountDetails
+      responses:
+        '200':
+          description: Account details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  primary_timezone:
+                    type: string
+                  settings:
+                    type: object
+                    properties:
+                      setting_team_permissions_enabled:
+                        type: boolean
+                      setting_enable_leads:
+                        type: boolean
+  /account-and-users/fetch-user-by-id:
+    get:
+      summary: Fetch user by ID
+      description: Retrieve user details by user ID.
+      operationId: fetchUserById
+      parameters:
+        - name: userId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  groups:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+  /account-and-users/fetch-api-user:
+    get:
+      summary: Fetch API user
+      description: Retrieve details of the API user.
+      operationId: fetchApiUser
+      responses:
+        '200':
+          description: API user details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  email:
+                    type: string
+  /account-and-users/list-users:
+    get:
+      summary: List users
+      description: Retrieve a list of users in the account.
+      operationId: listUsers
+      responses:
+        '200':
+          description: List of users retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    email:
+                      type: string
+  /leads/fetch-a-lead-by-id:
+    get:
+      summary: Fetch a lead by ID
+      description: Retrieve lead details by lead ID.
+      operationId: fetchLeadById
+      parameters:
+        - name: leadId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lead details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  email:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      category:
+                        type: string
+                  phone_numbers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        number:
+                          type: string
+                        category:
+                          type: string
+                  address:
+                    type: object
+                    properties:
+                      street:
+                        type: string
+                      city:
+                        type: string
+                      state:
+                        type: string
+                      postal_code:
+                        type: string
+                      country:
+                        type: string
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        custom_field_definition_id:
+                          type: integer
+                        value:
+                          type: string
+  /leads/create-a-new-lead:
+    post:
+      summary: Create a new lead
+      description: Create a new lead in the CRM.
+      operationId: createNewLead
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    category:
+                      type: string
+                phone_numbers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      number:
+                        type: string
+                      category:
+                        type: string
+                address:
+                  type: object
+                  properties:
+                    street:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    postal_code:
+                      type: string
+                    country:
+                      type: string
+                custom_fields:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      custom_field_definition_id:
+                        type: integer
+                      value:
+                        type: string
+      responses:
+        '201':
+          description: Lead created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /leads/bulk-create-leads:
+    post:
+      summary: Bulk create leads
+      description: Create multiple leads in the CRM.
+      operationId: bulkCreateLeads
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      category:
+                        type: string
+                  phone_numbers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        number:
+                          type: string
+                        category:
+                          type: string
+                  address:
+                    type: object
+                    properties:
+                      street:
+                        type: string
+                      city:
+                        type: string
+                      state:
+                        type: string
+                      postal_code:
+                        type: string
+                      country:
+                        type: string
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        custom_field_definition_id:
+                          type: integer
+                        value:
+                          type: string
+      responses:
+        '201':
+          description: Leads created successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+  /leads/update-a-lead:
+    put:
+      summary: Update a lead
+      description: Update an existing lead in the CRM.
+      operationId: updateLead
+      parameters:
+        - name: leadId
+          in: query
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    category:
+                      type: string
+                phone_numbers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      number:
+                        type: string
+                        category:
+                          type: string
+                address:
+                  type: object
+                  properties:
+                    street:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    postal_code:
+                      type: string
+                    country:
+                      type: string
+                custom_fields:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      custom_field_definition_id:
+                        type: integer
+                      value:
+                        type: string
+      responses:
+        '200':
+          description: Lead updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /leads/bulk-update-leads:
+    put:
+      summary: Bulk update leads
+      description: Update multiple leads in the CRM.
+      operationId: bulkUpdateLeads
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  email:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      category:
+                        type: string
+                  phone_numbers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        number:
+                          type: string
+                        category:
+                          type: string
+                  address:
+                    type: object
+                    properties:
+                      street:
+                        type: string
+                      city:
+                        type: string
+                      state:
+                        type: string
+                      postal_code:
+                        type: string
+                      country:
+                        type: string
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        custom_field_definition_id:
+                          type: integer
+                        value:
+                          type: string
+      responses:
+        '200':
+          description: Leads updated successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+  /leads/delete-a-lead:
+    delete:
+      summary: Delete a lead
+      description: Delete a lead from the CRM.
+      operationId: deleteLead
+      parameters:
+        - name: leadId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Lead deleted successfully
+  /leads/upsert-a-lead:
+    post:
+      summary: Upsert a lead
+      description: Create or update a lead in the CRM.
+      operationId: upsertLead
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    category:
+                      type: string
+                phone_numbers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      number:
+                        type: string
+                        category:
+                          type: string
+                address:
+                  type: object
+                  properties:
+                    street:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    postal_code:
+                      type: string
+                    country:
+                      type: string
+                custom_fields:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      custom_field_definition_id:
+                        type: integer
+                      value:
+                        type: string
+      responses:
+        '200':
+          description: Lead upserted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /leads/upsert-a-lead-by-custom-field:
+    post:
+      summary: Upsert a lead by custom field
+      description: Create or update a lead in the CRM using a custom field.
+      operationId: upsertLeadByCustomField
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                custom_field_definition_id:
+                  type: integer
+                value:
+                  type: string
+                lead:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    email:
+                      type: object
+                      properties:
+                        email:
+                          type: string
+                        category:
+                          type: string
+                    phone_numbers:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          number:
+                            type: string
+                            category:
+                              type: string
+                    address:
+                      type: object
+                      properties:
+                        street:
+                          type: string
+                        city:
+                          type: string
+                        state:
+                          type: string
+                        postal_code:
+                          type: string
+                        country:
+                          type: string
+                    custom_fields:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          custom_field_definition_id:
+                            type: integer
+                          value:
+                            type: string
+      responses:
+        '200':
+          description: Lead upserted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /leads/convert-a-lead:
+    post:
+      summary: Convert a lead
+      description: Convert a lead into a contact or opportunity.
+      operationId: convertLead
+      parameters:
+        - name: leadId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lead converted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /leads/list-leads-search:
+    get:
+      summary: List leads
+      description: Retrieve a list of leads based on search criteria.
+      operationId: listLeads
+      parameters:
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+        - name: name
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of leads retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    email:
+                      type: object
+                      properties:
+                        email:
+                          type: string
+                        category:
+                          type: string
+                    phone_numbers:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          number:
+                            type: string
+                            category:
+                              type: string
+                    address:
+                      type: object
+                      properties:
+                        street:
+                          type: string
+                        city:
+                          type: string
+                        state:
+                          type: string
+                        postal_code:
+                          type: string
+                        country:
+                          type: string
+                    custom_fields:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          custom_field_definition_id:
+                            type: integer
+                          value:
+                            type: string
+  /leads/see-a-leads-activities:
+    get:
+      summary: See a lead's activities
+      description: Retrieve activities associated with a lead.
+      operationId: seeLeadActivities
+      parameters:
+        - name: leadId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of activities retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    parent:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        type:
+                          type: string
+                    type:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category:
+                          type: string
+                    user_id:
+                      type: integer
+                    details:
+                      type: string
+                    activity_date:
+                      type: integer
+                    date_created:
+                      type: integer
+                    date_modified:
+                      type: integer
+  /leads/list-customer-sources:
+    get:
+      summary: List customer sources
+      description: Retrieve a list of customer sources for leads.
+      operationId: listCustomerSources
+      responses:
+        '200':
+          description: List of customer sources retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+  /leads/list-lead-statuses:
+    get:
+      summary: List lead statuses
+      description: Retrieve a list of lead statuses.
+      operationId: listLeadStatuses
+      responses:
+        '200':
+          description: List of lead statuses retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    order:
+                      type: integer
+                    is_default:
+                      type: boolean
+  /people/fetch-a-person-by-id:
+    get:
+      summary: Fetch a person by ID
+      description: Retrieve person details by person ID.
+      operationId: fetchPersonById
+      parameters:
+        - name: personId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Person details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        email:
+                          type: string
+                        category:
+                          type: string
+                  phone_numbers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        number:
+                          type: string
+                        category:
+                          type: string
+                  address:
+                    type: object
+                    properties:
+                      street:
+                        type: string
+                      city:
+                        type: string
+                      state:
+                        type: string
+                      postal_code:
+                        type: string
+                      country:
+                        type: string
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        custom_field_definition_id:
+                          type: integer
+                        value:
+                          type: string
+  /people/fetch-a-person-by-email:
+    get:
+      summary: Fetch a person by email
+      description: Retrieve person details by email.
+      operationId: fetchPersonByEmail
+      parameters:
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Person details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        email:
+                          type: string
+                        category:
+                          type: string
+                  phone_numbers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        number:
+                          type: string
+                        category:
+                          type: string
+                  address:
+                    type: object
+                    properties:
+                      street:
+                        type: string
+                      city:
+                        type: string
+                      state:
+                        type: string
+                      postal_code:
+                        type: string
+                      country:
+                        type: string
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        custom_field_definition_id:
+                          type: integer
+                        value:
+                          type: string
+  /people/create-a-new-person:
+    post:
+      summary: Create a new person
+      description: Create a new person in the CRM.
+      operationId: createNewPerson
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                emails:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      category:
+                        type: string
+                phone_numbers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      number:
+                        type: string
+                      category:
+                        type: string
+                address:
+                  type: object
+                  properties:
+                    street:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    postal_code:
+                      type: string
+                    country:
+                      type: string
+                custom_fields:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      custom_field_definition_id:
+                        type: integer
+                      value:
+                        type: string
+      responses:
+        '201':
+          description: Person created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /people/bulk-create-people:
+    post:
+      summary: Bulk create people
+      description: Create multiple people in the CRM.
+      operationId: bulkCreatePeople
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        email:
+                          type: string
+                        category:
+                          type: string
+                  phone_numbers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        number:
+                          type: string
+                        category:
+                          type: string
+                  address:
+                    type: object
+                    properties:
+                      street:
+                        type: string
+                      city:
+                        type: string
+                      state:
+                        type: string
+                      postal_code:
+                        type: string
+                      country:
+                        type: string
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        custom_field_definition_id:
+                          type: integer
+                        value:
+                          type: string
+      responses:
+        '201':
+          description: People created successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+  /people/update-a-person:
+    put:
+      summary: Update a person
+      description: Update an existing person in the CRM.
+      operationId: updatePerson
+      parameters:
+        - name: personId
+          in: query
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                emails:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      category:
+                        type: string
+                phone_numbers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      number:
+                        type: string
+                      category:
+                        type: string
+                address:
+                  type: object
+                  properties:
+                    street:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    postal_code:
+                      type: string
+                    country:
+                      type: string
+                custom_fields:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      custom_field_definition_id:
+                        type: integer
+                      value:
+                        type: string
+      responses:
+        '200':
+          description: Person updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /people/bulk-update-people:
+    put:
+      summary: Bulk update people
+      description: Update multiple people in the CRM.
+      operationId: bulkUpdatePeople
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        email:
+                          type: string
+                        category:
+                          type: string
+                  phone_numbers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        number:
+                          type: string
+                        category:
+                          type: string
+                  address:
+                    type: object
+                    properties:
+                      street:
+                        type: string
+                      city:
+                        type: string
+                      state:
+                        type: string
+                      postal_code:
+                        type: string
+                      country:
+                        type: string
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        custom_field_definition_id:
+                          type: integer
+                        value:
+                          type: string
+      responses:
+        '200':
+          description: People updated successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+  /people/delete-a-person:
+    delete:
+      summary: Delete a person
+      description: Delete a person from the CRM.
+      operationId: deletePerson
+      parameters:
+        - name: personId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Person deleted successfully
+  /people/list-people-search:
+    get:
+      summary: List people
+      description: Retrieve a list of people based on search criteria.
+      operationId: listPeople
+      parameters:
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+        - name: name
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of people retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    emails:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          email:
+                            type: string
+                          category:
+                            type: string
+                    phone_numbers:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          number:
+                            type: string
+                          category:
+                            type: string
+                    address:
+                      type: object
+                      properties:
+                        street:
+                          type: string
+                        city:
+                          type: string
+                        state:
+                          type: string
+                        postal_code:
+                          type: string
+                        country:
+                          type: string
+                    custom_fields:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          custom_field_definition_id:
+                            type: integer
+                          value:
+                            type: string
+  /people/see-a-persons-activities:
+    get:
+      summary: See a person's activities
+      description: Retrieve activities associated with a person.
+      operationId: seePersonActivities
+      parameters:
+        - name: personId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of activities retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    parent:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        type:
+                          type: string
+                    type:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category:
+                          type: string
+                    user_id:
+                      type: integer
+                    details:
+                      type: string
+                    activity_date:
+                      type: integer
+                    date_created:
+                      type: integer
+                    date_modified:
+                      type: integer
+  /people/list-contact-types:
+    get:
+      summary: List contact types
+      description: Retrieve a list of contact types for people.
+      operationId: listContactTypes
+      responses:
+        '200':
+          description: List of contact types retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+  /companies/fetch-a-company-by-id:
+    get:
+      summary: Fetch a company by ID
+      description: Retrieve company details by company ID.
+      operationId: fetchCompanyById
+      parameters:
+        - name: companyId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Company details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  address:
+                    type: object
+                    properties:
+                      street:
+                        type: string
+                      city:
+                        type: string
+                      state:
+                        type: string
+                      postal_code:
+                        type: string
+                      country:
+                        type: string
+                  email_domain:
+                    type: string
+                  phone_numbers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        number:
+                          type: string
+                        category:
+                          type: string
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        custom_field_definition_id:
+                          type: integer
+                        value:
+                          type: string
+  /companies/create-a-new-company:
+    post:
+      summary: Create a new company
+      description: Create a new company in the CRM.
+      operationId: createNewCompany
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                address:
+                  type: object
+                  properties:
+                    street:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    postal_code:
+                      type: string
+                    country:
+                      type: string
+                email_domain:
+                  type: string
+                phone_numbers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      number:
+                        type: string
+                      category:
+                        type: string
+                custom_fields:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      custom_field_definition_id:
+                        type: integer
+                      value:
+                        type: string
+      responses:
+        '201':
+          description: Company created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /companies/bulk-company-create:
+    post:
+      summary: Bulk create companies
+      description: Create multiple companies in the CRM.
+      operationId: bulkCreateCompanies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  address:
+                    type: object
+                    properties:
+                      street:
+                        type: string
+                      city:
+                        type: string
+                      state:
+                        type: string
+                      postal_code:
+                        type: string
+                      country:
+                        type: string
+                  email_domain:
+                    type: string
+                  phone_numbers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        number:
+                          type: string
+                        category:
+                          type: string
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        custom_field_definition_id:
+                          type: integer
+                        value:
+                          type: string
+      responses:
+        '201':
+          description: Companies created successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+  /companies/update-a-company:
+    put:
+      summary: Update a company
+      description: Update an existing company in the CRM.
+      operationId: updateCompany
+      parameters:
+        - name: companyId
+          in: query
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                address:
+                  type: object
+                  properties:
+                    street:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    postal_code:
+                      type: string
+                    country:
+                      type: string
+                email_domain:
+                  type: string
+                phone_numbers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      number:
+                        type: string
+                      category:
+                        type: string
+                custom_fields:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      custom_field_definition_id:
+                        type: integer
+                      value:
+                        type: string
+      responses:
+        '200':
+          description: Company updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /companies/bulk-company-update:
+    put:
+      summary: Bulk update companies
+      description: Update multiple companies in the CRM.
+      operationId: bulkUpdateCompanies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  address:
+                    type: object
+                    properties:
+                      street:
+                        type: string
+                      city:
+                        type: string
+                      state:
+                        type: string
+                      postal_code:
+                        type: string
+                      country:
+                        type: string
+                  email_domain:
+                    type: string
+                  phone_numbers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        number:
+                          type: string
+                        category:
+                          type: string
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        custom_field_definition_id:
+                          type: integer
+                        value:
+                          type: string
+      responses:
+        '200':
+          description: Companies updated successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+  /companies/delete-a-company:
+    delete:
+      summary: Delete a company
+      description: Delete a company from the CRM.
+      operationId: deleteCompany
+      parameters:
+        - name: companyId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Company deleted successfully
+  /companies/list-companies-search:
+    get:
+      summary: List companies
+      description: Retrieve a list of companies based on search criteria.
+      operationId: listCompanies
+      parameters:
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+        - name: name
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of companies retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    address:
+                      type: object
+                      properties:
+                        street:
+                          type: string
+                        city:
+                          type: string
+                        state:
+                          type: string
+                        postal_code:
+                          type: string
+                        country:
+                          type: string
+                    email_domain:
+                      type: string
+                    phone_numbers:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          number:
+                            type: string
+                          category:
+                            type: string
+                    custom_fields:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          custom_field_definition_id:
+                            type: integer
+                          value:
+                            type: string
+  /companies/see-a-companys-activities:
+    get:
+      summary: See a company's activities
+      description: Retrieve activities associated with a company.
+      operationId: seeCompanyActivities
+      parameters:
+        - name: companyId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of activities retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    parent:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        type:
+                          type: string
+                    type:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category:
+                          type: string
+                    user_id:
+                      type: integer
+                    details:
+                      type: string
+                    activity_date:
+                      type: integer
+                    date_created:
+                      type: integer
+                    date_modified:
+                      type: integer
+  /companies/list-contact-types:
+    get:
+      summary: List contact types
+      description: Retrieve a list of contact types for companies.
+      operationId: listCompanyContactTypes
+      responses:
+        '200':
+          description: List of contact types retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+  /opportunities/fetch-an-opportunity-by-id:
+    get:
+      summary: Fetch an opportunity by ID
+      description: Retrieve opportunity details by opportunity ID.
+      operationId: fetchOpportunityById
+      parameters:
+        - name: opportunityId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Opportunity details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  company_id:
+                    type: integer
+                  company_name:
+                    type: string
+                  customer_source_id:
+                    type: integer
+                  details:
+                    type: string
+                  pipeline_id:
+                    type: integer
+                  pipeline_stage_id:
+                    type: integer
+                  status:
+                    type: string
+                  monetary_value:
+                    type: integer
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        custom_field_definition_id:
+                          type: integer
+                        value:
+                          type: string
+  /opportunities/create-a-new-opportunity:
+    post:
+      summary: Create a new opportunity
+      description: Create a new opportunity in the CRM.
+      operationId: createNewOpportunity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                company_id:
+                  type: integer
+                company_name:
+                  type: string
+                customer_source_id:
+                  type: integer
+                details:
+                  type: string
+                pipeline_id:
+                  type: integer
+                pipeline_stage_id:
+                  type: integer
+                status:
+                  type: string
+                monetary_value:
+                  type: integer
+                custom_fields:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      custom_field_definition_id:
+                        type: integer
+                      value:
+                        type: string
+      responses:
+        '201':
+          description: Opportunity created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /opportunities/update-an-opportunity:
+    put:
+      summary: Update an opportunity
+      description: Update an existing opportunity in the CRM.
+      operationId: updateOpportunity
+      parameters:
+        - name: opportunityId
+          in: query
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                company_id:
+                  type: integer
+                company_name:
+                  type: string
+                customer_source_id:
+                  type: integer
+                details:
+                  type: string
+                pipeline_id:
+                  type: integer
+                pipeline_stage_id:
+                  type: integer
+                status:
+                  type: string
+                monetary_value:
+                  type: integer
+                custom_fields:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      custom_field_definition_id:
+                        type: integer
+                      value:
+                        type: string
+      responses:
+        '200':
+          description: Opportunity updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /opportunities/delete-an-opportunity:
+    delete:
+      summary: Delete an opportunity
+      description: Delete an opportunity from the CRM.
+      operationId: deleteOpportunity
+      parameters:
+        - name: opportunityId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Opportunity deleted successfully
+  /opportunities/list-opportunities-search:
+    get:
+      summary: List opportunities
+      description: Retrieve a list of opportunities based on search criteria.
+      operationId: listOpportunities
+      parameters:
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+        - name: name
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of opportunities retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    company_id:
+                      type: integer
+                    company_name:
+                      type: string
+                    customer_source_id:
+                      type: integer
+                    details:
+                      type: string
+                    pipeline_id:
+                      type: integer
+                    pipeline_stage_id:
+                      type: integer
+                    status:
+                      type: string
+                    monetary_value:
+                      type: integer
+                    custom_fields:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          custom_field_definition_id:
+                            type: integer
+                          value:
+                            type: string
+  /opportunities/list-customer-sources:
+    get:
+      summary: List customer sources
+      description: Retrieve a list of customer sources for opportunities.
+      operationId: listOpportunityCustomerSources
+      responses:
+        '200':
+          description: List of customer sources retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+  /opportunities/list-loss-reasons:
+    get:
+      summary: List loss reasons
+      description: Retrieve a list of loss reasons for opportunities.
+      operationId: listLossReasons
+      responses:
+        '200':
+          description: List of loss reasons retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+  /opportunities/list-pipelines:
+    get:
+      summary: List pipelines
+      description: Retrieve a list of pipelines for opportunities.
+      operationId: listPipelines
+      responses:
+        '200':
+          description: List of pipelines retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    stages:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                          win_probability:
+                            type: integer
+  /opportunities/list-pipeline-stages:
+    get:
+      summary: List pipeline stages
+      description: Retrieve a list of pipeline stages for opportunities.
+      operationId: listPipelineStages
+      responses:
+        '200':
+          description: List of pipeline stages retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    pipeline_id:
+                      type: integer
+                    win_probability:
+                      type: integer
+  /opportunities/list-stages-in-a-pipeline:
+    get:
+      summary: List stages in a pipeline
+      description: Retrieve a list of stages in a specific pipeline.
+      operationId: listStagesInPipeline
+      parameters:
+        - name: pipelineId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of stages in the pipeline retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    win_probability:
+                      type: integer
+  /projects/fetch-a-project-by-id:
+    get:
+      summary: Fetch a project by ID
+      description: Retrieve project details by project ID.
+      operationId: fetchProjectById
+      parameters:
+        - name: projectId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Project details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  related_resource:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                  status:
+                    type: string
+                  details:
+                    type: string
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        custom_field_definition_id:
+                          type: integer
+                        value:
+                          type: string
+  /projects/create-a-new-project:
+    post:
+      summary: Create a new project
+      description: Create a new project in the CRM.
+      operationId: createNewProject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                related_resource:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+                status:
+                  type: string
+                details:
+                  type: string
+                custom_fields:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      custom_field_definition_id:
+                        type: integer
+                      value:
+                        type: string
+      responses:
+        '201':
+          description: Project created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /projects/update-a-project:
+    put:
+      summary: Update a project
+      description: Update an existing project in the CRM.
+      operationId: updateProject
+      parameters:
+        - name: projectId
+          in: query
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                related_resource:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+                status:
+                  type: string
+                details:
+                  type: string
+                custom_fields:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      custom_field_definition_id:
+                        type: integer
+                      value:
+                        type: string
+      responses:
+        '200':
+          description: Project updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /projects/delete-a-project:
+    delete:
+      summary: Delete a project
+      description: Delete a project from the CRM.
+      operationId: deleteProject
+      parameters:
+        - name: projectId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Project deleted successfully
+  /projects/list-projects-search:
+    get:
+      summary: List projects
+      description: Retrieve a list of projects based on search criteria.
+      operationId: listProjects
+      parameters:
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+        - name: name
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of projects retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    related_resource:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        type:
+                          type: string
+                    status:
+                      type: string
+                    details:
+                      type: string
+                    custom_fields:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          custom_field_definition_id:
+                            type: integer
+                          value:
+                            type: string
+  /tags/list-tags:
+    get:
+      summary: List tags
+      description: Retrieve a list of tags used in the CRM.
+      operationId: listTags
+      responses:
+        '200':
+          description: List of tags retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    count:
+                      type: integer
+  /tasks/fetch-a-task-by-id:
+    get:
+      summary: Fetch a task by ID
+      description: Retrieve task details by task ID.
+      operationId: fetchTaskById
+      parameters:
+        - name: taskId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Task details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  related_resource:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                  assignee_id:
+                    type: integer
+                  due_date:
+                    type: integer
+                  priority:
+                    type: string
+                  status:
+                    type: string
+                  details:
+                    type: string
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        custom_field_definition_id:
+                          type: integer
+                        value:
+                          type: string
+  /tasks/create-a-new-task:
+    post:
+      summary: Create a new task
+      description: Create a new task in the CRM.
+      operationId: createNewTask
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                related_resource:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+                assignee_id:
+                  type: integer
+                due_date:
+                  type: integer
+                priority:
+                  type: string
+                status:
+                  type: string
+                details:
+                  type: string
+                custom_fields:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      custom_field_definition_id:
+                        type: integer
+                      value:
+                        type: string
+      responses:
+        '201':
+          description: Task created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /tasks/update-a-task:
+    put:
+      summary: Update a task
+      description: Update an existing task in the CRM.
+      operationId: updateTask
+      parameters:
+        - name: taskId
+          in: query
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                related_resource:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+                assignee_id:
+                  type: integer
+                due_date:
+                  type: integer
+                priority:
+                  type: string
+                status:
+                  type: string
+                details:
+                  type: string
+                custom_fields:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      custom_field_definition_id:
+                        type: integer
+                      value:
+                        type: string
+      responses:
+        '200':
+          description: Task updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /tasks/delete-a-task:
+    delete:
+      summary: Delete a task
+      description: Delete a task from the CRM.
+      operationId: deleteTask
+      parameters:
+        - name: taskId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Task deleted successfully
+  /tasks/list-tasks-search:
+    get:
+      summary: List tasks
+      description: Retrieve a list of tasks based on search criteria.
+      operationId: listTasks
+      parameters:
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+        - name: name
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of tasks retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    related_resource:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        type:
+                          type: string
+                    assignee_id:
+                      type: integer
+                    due_date:
+                      type: integer
+                    priority:
+                      type: string
+                    status:
+                      type: string
+                    details:
+                      type: string
+                    custom_fields:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          custom_field_definition_id:
+                            type: integer
+                          value:
+                            type: string
+  /activities/fetch-an-activity-by-id:
+    get:
+      summary: Fetch an activity by ID
+      description: Retrieve activity details by activity ID.
+      operationId: fetchActivityById
+      parameters:
+        - name: activityId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Activity details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  parent:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                  type:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      category:
+                        type: string
+                  user_id:
+                    type: integer
+                  details:
+                    type: string
+                  activity_date:
+                    type: integer
+                  date_created:
+                    type: integer
+                  date_modified:
+                    type: integer
+  /activities/create-a-new-activity:
+    post:
+      summary: Create a new activity
+      description: Create a new activity in the CRM.
+      operationId: createNewActivity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parent:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+                type:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    category:
+                      type: string
+                user_id:
+                  type: integer
+                details:
+                  type: string
+                activity_date:
+                  type: integer
+      responses:
+        '201':
+          description: Activity created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  details:
+                    type: string
+  /activities/bulk-create-activities:
+    post:
+      summary: Bulk create activities
+      description: Create multiple activities in the CRM.
+      operationId: bulkCreateActivities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  parent:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                  type:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      category:
+                        type: string
+                  user_id:
+                    type: integer
+                  details:
+                    type: string
+                  activity_date:
+                    type: integer
+      responses:
+        '201':
+          description: Activities created successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    details:
+                      type: string
+  /activities/update-an-activity:
+    put:
+      summary: Update an activity
+      description: Update an existing activity in the CRM.
+      operationId: updateActivity
+      parameters:
+        - name: activityId
+          in: query
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parent:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+                type:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    category:
+                      type: string
+                user_id:
+                  type: integer
+                details:
+                  type: string
+                activity_date:
+                  type: integer
+      responses:
+        '200':
+          description: Activity updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  details:
+                    type: string
+  /activities/delete-an-activity:
+    delete:
+      summary: Delete an activity
+      description: Delete an activity from the CRM.
+      operationId: deleteActivity
+      parameters:
+        - name: activityId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Activity deleted successfully
+  /activities/list-activities-search:
+    get:
+      summary: List activities
+      description: Retrieve a list of activities based on search criteria.
+      operationId: listActivities
+      parameters:
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+        - name: name
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of activities retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    parent:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        type:
+                          type: string
+                    type:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category:
+                          type: string
+                    user_id:
+                      type: integer
+                    details:
+                      type: string
+                    activity_date:
+                      type: integer
+                    date_created:
+                      type: integer
+                    date_modified:
+                      type: integer
+  /activities/list-activity-types:
+    get:
+      summary: List activity types
+      description: Retrieve a list of activity types.
+      operationId: listActivityTypes
+      responses:
+        '200':
+          description: List of activity types retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    category:
+                      type: string
+                    name:
+                      type: string
+                    is_disabled:
+                      type: boolean
+                    count_as_interaction:
+                      type: boolean
+  /custom-fields/general/search-entity-leads-people-etc-by-custom-field:
+    get:
+      summary: Search entities by custom field
+      description: Search leads, people, etc., by custom field.
+      operationId: searchEntitiesByCustomField
+      parameters:
+        - name: custom_field_definition_id
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: value
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Entities retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+  /custom-fields/general/computed_cf_values:
+    get:
+      summary: Get computed custom field values
+      description: Retrieve computed values for custom fields.
+      operationId: getComputedCustomFieldValues
+      parameters:
+        - name: entityId
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: entityType
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Computed custom field values retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        custom_field_definition_id:
+                          type: integer
+                        value:
+                          type: string
+                        computed_value:
+                          type: string
+  /custom-fields/general/get-custom-activity-type:
+    get:
+      summary: Get custom activity type
+      description: Retrieve a custom activity type by ID.
+      operationId: getCustomActivityType
+      parameters:
+        - name: activityTypeId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Custom activity type retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  icon_type:
+                    type: string
+                  is_disabled:
+                    type: boolean
+                  is_interaction:
+                    type: boolean
+  /custom-fields/general/list-all-custom-activity-types:
+    get:
+      summary: List all custom activity types
+      description: Retrieve a list of all custom activity types.
+      operationId: listAllCustomActivityTypes
+      responses:
+        '200':
+          description: List of custom activity types retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    icon_type:
+                      type: string
+                    is_disabled:
+                      type: boolean
+                    is_interaction:
+                      type: boolean
+  /custom-fields/general/update-an-existing-custom-activity-type:
+    put:
+      summary: Update an existing custom activity type
+      description: Update a custom activity type in the CRM.
+      operationId: updateCustomActivityType
+      parameters:
+        - name: activityTypeId
+          in: query
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                icon_type:
+                  type: string
+                is_disabled:
+                  type: boolean
+                is_interaction:
+                  type: boolean
+      responses:
+        '200':
+          description: Custom activity type updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /custom-fields/general/create-a-new-custom-activity-type:
+    post:
+      summary: Create a new custom activity type
+      description: Create a new custom activity type in the CRM.
+      operationId: createNewCustomActivityType
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                icon_type:
+                  type: string
+                is_disabled:
+                  type: boolean
+                is_interaction:
+                  type: boolean
+      responses:
+        '201':
+          description: Custom activity type created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /custom-fields/general/delete-a-custom-field-definition:
+    delete:
+      summary: Delete a custom field definition
+      description: Delete a custom field definition from the CRM.
+      operationId: deleteCustomFieldDefinition
+      parameters:
+        - name: customFieldDefinitionId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Custom field definition deleted successfully
+  /custom-fields/general/list-custom-field-definitions:
+    get:
+      summary: List custom field definitions
+      description: Retrieve a list of custom field definitions.
+      operationId: listCustomFieldDefinitions
+      responses:
+        '200':
+          description: List of custom field definitions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    data_type:
+                      type: string
+                    available_on:
+                      type: array
+                      items:
+                        type: string
+                    is_filterable:
+                      type: boolean
+  /custom-fields/general/update-an-existing-custom-field-definition:
+    put:
+      summary: Update an existing custom field definition
+      description: Update a custom field definition in the CRM.
+      operationId: updateCustomFieldDefinition
+      parameters:
+        - name: customFieldDefinitionId
+          in: query
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                data_type:
+                  type: string
+                available_on:
+                  type: array
+                  items:
+                    type: string
+                is_filterable:
+                  type: boolean
+      responses:
+        '200':
+          description: Custom field definition updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /custom-fields/general/fetch-a-custom-field-definition:
+    get:
+      summary: Fetch a custom field definition
+      description: Retrieve a custom field definition by ID.
+      operationId: fetchCustomFieldDefinition
+      parameters:
+        - name: customFieldDefinitionId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Custom field definition retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  data_type:
+                    type: string
+                  available_on:
+                    type: array
+                    items:
+                      type: string
+                  is_filterable:
+                    type: boolean
+  /custom-fields/general/create-a-new-custom-field-definition:
+    post:
+      summary: Create a new custom field definition
+      description: Create a new custom field definition in the CRM.
+      operationId: createNewCustomFieldDefinition
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                data_type:
+                  type: string
+                available_on:
+                  type: array
+                  items:
+                    type: string
+                is_filterable:
+                  type: boolean
+      responses:
+        '201':
+          description: Custom field definition created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+  /custom-fields/connect-fields/delete-a-connection:
+    delete:
+      summary: Delete a connection
+      description: Delete a connection between entities in the CRM.
+      operationId: deleteConnection
+      parameters:
+        - name: connectionId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Connection deleted successfully
+  /custom-fields/connect-fields/list-the-connections-on-specified-entity:
+    get:
+      summary: List connections on specified entity
+      description: Retrieve a list of connections for a specified entity.
+      operationId: listConnectionsOnEntity
+      parameters:
+        - name: entityId
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: entityType
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of connections retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    custom_field_definition_id:
+                      type: integer
+                    source:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        entity_type:
+                          type: string
+                        name:
+                          type: string
+                    target:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        entity_type:
+                          type: string
+                        name:
+                          type: string
+  /custom-fields/connect-fields/list-the-connections-on-specified-entity-custom-field-definition-id:
+    get:
+      summary: List connections on specified entity by custom field definition ID
+      description: Retrieve a list of connections for a specified entity by custom field definition ID.
+      operationId: listConnectionsOnEntityByCustomFieldDefinitionId
+      parameters:
+        - name: entityId
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: entityType
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: customFieldDefinitionId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of connections retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    custom_field_definition_id:
+                      type: integer
+                    source:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        entity_type:
+                          type: string
+                        name:
+                          type: string
+                    target:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        entity_type:
+                          type: string
+                        name:
+                          type: string
+  /custom-fields/connect-fields/create-a-connection:
+    post:
+      summary: Create a connection
+      description: Create a connection between entities in the CRM.
+      operationId: createConnection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                custom_field_definition_id:
+                  type: integer
+                source:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    entity_type:
+                      type: string
+                target:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    entity_type:
+                      type: string
+      responses:
+        '201':
+          description: Connection created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  custom_field_definition_id:
+                    type: integer
+  /related-items/view-all-records-related-to-an-entity:
+    get:
+      summary: View all records related to an entity
+      description: Retrieve all records related to a specified entity.
+      operationId: viewAllRecordsRelatedToEntity
+      parameters:
+        - name: entityId
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: entityType
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of related records retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+  /related-items/view-all-records-of-a-given-entity-type-related-to-an-entity:
+    get:
+      summary: View all records of a given entity type related to an entity
+      description: Retrieve all records of a specified entity type related to a given entity.
+      operationId: viewAllRecordsOfEntityTypeRelatedToEntity
+      parameters:
+        - name: entityId
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: entityType
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: relatedEntityType
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of related records retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+  /related-items/relate-an-existing-record-to-an-entity:
+    post:
+      summary: Relate an existing record to an entity
+      description: Relate an existing record to a specified entity.
+      operationId: relateRecordToEntity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                resource:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+      responses:
+        '200':
+          description: Record related successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  added:
+                    type: boolean
+  /related-items/remove-relationship-between-record-and-entity:
+    delete:
+      summary: Remove relationship between record and entity
+      description: Remove the relationship between a record and a specified entity.
+      operationId: removeRelationshipBetweenRecordAndEntity
+      parameters:
+        - name: resourceId
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: resourceType
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Relationship removed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  removed:
+                    type: boolean
+  /file-upload/list-attached-files-of-an-entity-record:
+    get:
+      summary: List attached files of an entity record
+      description: Retrieve a list of files attached to a specified entity record.
+      operationId: listAttachedFiles
+      parameters:
+        - name: entityId
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: entityType
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of attached files retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    file_name:
+                      type: string
+                    file_size:
+                      type: integer
+                    content_type:
+                      type: string
+                    creator_id:
+                      type: integer
+                    date_created:
+                      type: integer
+                    date_modified:
+                      type: integer
+  /file-upload/get-metadata-of-a-specific-attached-file:
+    get:
+      summary: Get metadata of a specific attached file
+      description: Retrieve metadata of a specific file attached to an entity record.
+      operationId: getFileMetadata
+      parameters:
+        - name: fileId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: File metadata retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  file_name:
+                    type: string
+                  file_size:
+                    type: integer
+                  content_type:
+                    type: string
+                  creator_id:
+                    type: integer
+                  date_created:
+                    type: integer
+                  date_modified:
+                    type: integer
+  /file-upload/get-signed-s3-url:
+    post:
+      summary: Get signed S3 URL
+      description: Retrieve a signed URL for uploading a file to S3.
+      operationId: getSignedS3Url
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                file_name:
+                  type: string
+                content_type:
+                  type: string
+      responses:
+        '200':
+          description: Signed S3 URL retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                  method:
+                    type: string
+                  body:
+                    type: object
+                    additionalProperties:
+                      type: string
+  /file-upload/upload-your-file-to-s3:
+    post:
+      summary: Upload your file to S3
+      description: Upload a file to S3 using the provided signed URL.
+      operationId: uploadFileToS3
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                key:
+                  type: string
+                policy:
+                  type: string
+                signature:
+                  type: string
+                aws_access_key_id:
+                  type: string
+                acl:
+                  type: string
+                success_action_status:
+                  type: string
+      responses:
+        '201':
+          description: File uploaded successfully
+  /file-upload/relate-the-uploaded-file-to-a-specific-entity:
+    post:
+      summary: Relate the uploaded file to a specific entity
+      description: Relate an uploaded file to a specified entity in the CRM.
+      operationId: relateUploadedFileToEntity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                file_id:
+                  type: integer
+                entity_id:
+                  type: integer
+                entity_type:
+                  type: string
+      responses:
+        '200':
+          description: File related to entity successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  related:
+                    type: boolean
+  /file-upload/delete-a-file:
+    delete:
+      summary: Delete a file
+      description: Delete a file from the CRM.
+      operationId: deleteFile
+      parameters:
+        - name: fileId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: File deleted successfully
+  /webhooks/create-new-subscription:
+    post:
+      summary: Create new subscription
+      description: Create a new webhook subscription.
+      operationId: createSubscription
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target:
+                  type: string
+                type:
+                  type: string
+                event:
+                  type: string
+                secret:
+                  type: object
+                  properties:
+                    secret:
+                      type: string
+                    key:
+                      type: string
+                headers:
+                  type: object
+                  additionalProperties:
+                    type: string
+                custom_field_computed_values:
+                  type: boolean
+      responses:
+        '201':
+          description: Subscription created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  target:
+                    type: string
+  /webhooks/update-a-subscription:
+    put:
+      summary: Update a subscription
+      description: Update an existing webhook subscription.
+      operationId: updateSubscription
+      parameters:
+        - name: subscriptionId
+          in: query
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target:
+                  type: string
+                type:
+                  type: string
+                event:
+                  type: string
+                secret:
+                  type: object
+                  properties:
+                    secret:
+                      type: string
+                    key:
+                      type: string
+                headers:
+                  type: object
+                  additionalProperties:
+                    type: string
+                custom_field_computed_values:
+                  type: boolean
+      responses:
+        '200':
+          description: Subscription updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  target:
+                    type: string
+  /webhooks/delete-subscription-unsubscribe:
+    delete:
+      summary: Delete subscription
+      description: Delete a webhook subscription.
+      operationId: deleteSubscription
+      parameters:
+        - name: subscriptionId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Subscription deleted successfully
+  /webhooks/list-all-subscriptions:
+    get:
+      summary: List all subscriptions
+      description: Retrieve a list of all webhook subscriptions.
+      operationId: listSubscriptions
+      responses:
+        '200':
+          description: List of subscriptions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    target:
+                      type: string
+                    type:
+                      type: string
+                    event:
+                      type: string
+                    secret:
+                      type: object
+                      properties:
+                        secret:
+                          type: string
+                        key:
+                          type: string
+                    custom_field_computed_values:
+                      type: boolean
+  /webhooks/view-subscription-by-id:
+    get:
+      summary: View subscription by ID
+      description: Retrieve details of a webhook subscription by ID.
+      operationId: viewSubscriptionById
+      parameters:
+        - name: subscriptionId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Subscription details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  target:
+                    type: string
+                  type:
+                    type: string
+                  event:
+                    type: string
+                  secret:
+                    type: object
+                    properties:
+                      secret:
+                        type: string
+                      key:
+                        type: string
+                  custom_field_computed_values:
+                    type: boolean
+components:
+  schemas:
+    Lead:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: object
+          properties:
+            email:
+              type: string
+            category:
+              type: string
+        phone_numbers:
+          type: array
+          items:
+            type: object
+            properties:
+              number:
+                type: string
+              category:
+                type: string
+        address:
+          type: object
+          properties:
+            street:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            postal_code:
+              type: string
+            country:
+              type: string
+        custom_fields:
+          type: array
+          items:
+            type: object
+            properties:
+              custom_field_definition_id:
+                type: integer
+              value:
+                type: string
+    Person:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        emails:
+          type: array
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+              category:
+                type: string
+        phone_numbers:
+          type: array
+          items:
+            type: object
+            properties:
+              number:
+                type: string
+              category:
+                type: string
+        address:
+          type: object
+          properties:
+            street:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            postal_code:
+              type: string
+            country:
+              type: string
+        custom_fields:
+          type: array
+          items:
+            type: object
+            properties:
+              custom_field_definition_id:
+                type: integer
+              value:
+                type: string
+    Company:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        address:
+          type: object
+          properties:
+            street:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            postal_code:
+              type: string
+            country:
+              type: string
+        email_domain:
+          type: string
+        phone_numbers:
+          type: array
+          items:
+            type: object
+            properties:
+              number:
+                type: string
+              category:
+                type: string
+        custom_fields:
+          type: array
+          items:
+            type: object
+            properties:
+              custom_field_definition_id:
+                type: integer
+              value:
+                type: string
+    Opportunity:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        company_id:
+          type: integer
+        company_name:
+          type: string
+        customer_source_id:
+          type: integer
+        details:
+          type: string
+        pipeline_id:
+          type: integer
+        pipeline_stage_id:
+          type: integer
+        status:
+          type: string
+        monetary_value:
+          type: integer
+        custom_fields:
+          type: array
+          items:
+            type: object
+            properties:
+              custom_field_definition_id:
+                type: integer
+              value:
+                type: string
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        related_resource:
+          type: object
+          properties:
+            id:
+              type: integer
+            type:
+              type: string
+        status:
+          type: string
+        details:
+          type: string
+        custom_fields:
+          type: array
+          items:
+            type: object
+            properties:
+              custom_field_definition_id:
+                type: integer
+              value:
+                type: string
+    Task:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        related_resource:
+          type: object
+          properties:
+            id:
+              type: integer
+            type:
+              type: string
+        assignee_id:
+          type: integer
+        due_date:
+          type: integer
+        priority:
+          type: string
+        status:
+          type: string
+        details:
+          type: string
+        custom_fields:
+          type: array
+          items:
+            type: object
+            properties:
+              custom_field_definition_id:
+                type: integer
+              value:
+                type: string
+    Activity:
+      type: object
+      properties:
+        id:
+          type: integer
+        parent:
+          type: object
+          properties:
+            id:
+              type: integer
+            type:
+              type: string
+        type:
+          type: object
+          properties:
+            id:
+              type: integer
+            category:
+              type: string
+        user_id:
+          type: integer
+        details:
+          type: string
+        activity_date:
+          type: integer
+        date_created:
+          type: integer
+        date_modified:
+          type: integer
+    CustomFieldDefinition:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        data_type:
+          type: string
+        available_on:
+          type: array
+          items:
+            type: string
+        is_filterable:
+          type: boolean
+    Subscription:
+      type: object
+      properties:
+        id:
+          type: integer
+        target:
+          type: string
+        type:
+          type: string
+        event:
+          type: string
+        secret:
+          type: object
+          properties:
+            secret:
+              type: string
+            key:
+              type: string
+        custom_field_computed_values:
+          type: boolean
